@@ -1,0 +1,37 @@
+name: Deploy workflow
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        type: string
+        description: Deploy project
+        required: true
+      target:
+        type: string
+        description: deploy target environment
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Build
+        env:
+          PROJECT_NAME: ${{ inputs.project }}
+        run: |
+          echo $PROJECT_NAME
+
+      - name: Deploy
+        run: |
+           echo "todo implement"
